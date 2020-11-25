@@ -7,6 +7,14 @@ namespace WpfApp1.ViewModels
 {
     public class UserViewModel : ViewModelBase
     {
+        public string ToggleBothEnabled
+        {
+            get { return toggleBothEnabled; }
+            set { Set(nameof(ToggleBothEnabled), ref toggleBothEnabled, value, true); }
+        }
+
+        private string toggleBothEnabled;
+
         public string WindowTitle
         {
             get { return windowTitle; }
@@ -90,17 +98,36 @@ namespace WpfApp1.ViewModels
             ShowToggledCommand = new RelayCommand(async () => await ToggleBothAsync());
             UC1Visible = true;
             UC2Visible = false;
+            GetToggleBothEnabled();
+        }
+
+        private void GetToggleBothEnabled()
+        {
+            //(SelectedPatient == null), ingen SelectedPatient
+            //(SelectedPatient != null && SelectedPatient.Id == 0), skapar en ny patient
+            //(SelectedPatient != null && SelectedPatient.Id > 0), redigerar befintlig patient
+
+            if (UC1Visible != UC2Visible)
+            {
+                ToggleBothEnabled = "True";
+            }
+            else
+            {
+                ToggleBothEnabled = "False";
+            }
         }
 
         private Task ShowUC1Async()
         {
             UC1Visible = !UC1Visible;
+            GetToggleBothEnabled();
             return Task.CompletedTask;
         }
 
         private Task ShowUC2Async()
         {
             UC2Visible = !UC2Visible;
+            GetToggleBothEnabled();
             return Task.CompletedTask;
         }
 
@@ -108,6 +135,7 @@ namespace WpfApp1.ViewModels
         {
             UC1Visible = !UC1Visible;
             UC2Visible = !UC2Visible;
+            GetToggleBothEnabled();
             return Task.CompletedTask;
         }
     }

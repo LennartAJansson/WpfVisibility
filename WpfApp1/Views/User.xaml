@@ -9,7 +9,7 @@
     <StackPanel>
         <local:UserControl1 Visibility="{Binding ShowUC1}" Background="Red" />
         <local:UserControl2 Visibility="{Binding ShowUC2}" Background="Blue" />
-        <Button Content="Toggle both" Command="{Binding ShowToggledCommand}" Height="32" Width="120" />
+        <Button Content="Toggle both" IsEnabled="{Binding ToggleBothEnabled}" Command="{Binding ShowToggledCommand}" Height="32" Width="120" />
         <!--<PasswordBox />-->
     </StackPanel>
 </UserControl>
